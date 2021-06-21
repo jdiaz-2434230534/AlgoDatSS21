@@ -1,0 +1,7 @@
+D:\Documents\devEnvironment\git\random\AlgoDatSS19\AlgoDatSS19\AlgoDatSS19\bin\Debug\AlgoDatSS19.exe.config
+D:\Documents\devEnvironment\git\random\AlgoDatSS19\AlgoDatSS19\AlgoDatSS19\bin\Debug\AlgoDatSS19.exe
+D:\Documents\devEnvironment\git\random\AlgoDatSS19\AlgoDatSS19\AlgoDatSS19\bin\Debug\AlgoDatSS19.pdb
+D:\Documents\devEnvironment\git\random\AlgoDatSS19\AlgoDatSS19\AlgoDatSS19\obj\Debug\AlgoDatSS19.csproj.AssemblyReference.cache
+D:\Documents\devEnvironment\git\random\AlgoDatSS19\AlgoDatSS19\AlgoDatSS19\obj\Debug\AlgoDatSS19.csproj.CoreCompileInputs.cache
+D:\Documents\devEnvironment\git\random\AlgoDatSS19\AlgoDatSS19\AlgoDatSS19\obj\Debug\AlgoDatSS19.exe
+D:\Documents\devEnvironment\git\random\AlgoDatSS19\AlgoDatSS19\AlgoDatSS19\obj\Debug\AlgoDatSS19.pdb
