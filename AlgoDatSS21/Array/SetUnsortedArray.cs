@@ -6,35 +6,17 @@ using System.Threading.Tasks;
 
 namespace AlgoDatSS21
 {
-  class SetUnsortedArray : MultiSetUnsortedArray, ISet
+  class SetUnsortedArray : UnsortedArray, ISetUnsorted
   {
-    public SetUnsortedArray(int size) : base(size) { }
-
-    //Search-Funktion implementiert in MultiSetUnsortedArray
-
-    public new bool Insert(int x)
+    public bool Insert(int x)
     {
-      //Prüfen ob Element x schon vorhanden ist, Menge -> nicht doppelt vorhanden
-      if (Search(x) == true)
+      if (Search(x))
       {
         return false;
       }
 
-      //Einfügen des Elements x 
-      for (int i = 0; i < array.Length; i++)
-      {
-        //suche nach 1.freiem Feld
-        if (array[i] == 0)
-        {
-          array[i] = x;
-          return true;
-        }
-
-      }
-      return false;
+      entries = entries.Concat(new[] {x}).ToArray();
+      return true;
     }
-
-    //Delete-Funktion implementiert in MultiSetUnsortedArray
-    //Print-Funktion implementiert in SupportArray
   }
 }

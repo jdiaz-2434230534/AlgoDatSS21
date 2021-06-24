@@ -1,15 +1,26 @@
 namespace AlgoDatSS21
 {
-    class SetUnsortedLinkedList : MultiSetUnsortedLinkedList, ISet
+    class SetUnsortedLinkedList : UnsortedList, ISetUnsorted
     {
-        public override bool Insert(int x)
+        public bool Insert(int x)
         {
-            if (!Search(x))   //wenn Element nicht gefunden
+            var searchResult = _search_(x);
+
+            // Already in List
+            if (searchResult.found)
             {
-                Enque(x);     //am Ende der Liste einreihen
+                return false;
+            }
+            
+            // Position is root
+            if (searchResult.lastEntry == null)
+            {
+                root = new ListEntry(x);
                 return true;
             }
-            return false;     //Element schon vorhanden, nicht speichern
+            
+            searchResult.lastEntry.next = new ListEntry(x);
+            return true;
         }
     }
 }

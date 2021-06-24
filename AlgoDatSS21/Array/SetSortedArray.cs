@@ -1,44 +1,38 @@
+using System;
+
 namespace AlgoDatSS21
 {
-  class SetSortedArray : MultiSetSortedArray, ISetSorted
+  class SetSortedArray : SortedArray, ISetSorted
   {
-    public SetSortedArray(int size) : base(size) { }
-
-    //Suchfunktion implementiert in MultiSetSortedArray
-
-    public new bool Insert(int x)
+    public bool Insert(int x)
     {
-      //Wenn Element x schon vorhanden, wird es nicht neu hinzugefügt
-      if (Search(x) == true)
+      if (Search(x))
       {
         return false;
       }
-
-      //Sortiertes Einfügen von Element x an entprechender Stelle
-      for (int i = 0; i < array.Length ; i++)
+      int newIndex = 0;
+      while (newIndex < entries.Length && entries[newIndex] < x)
       {
-        if (array[i] > x)
+        newIndex++;
+      }
+      
+      var newEntries = new int[entries.Length + 1];
+      for (int i = 0; i < newEntries.Length; i++)
+      {
+        if (i < newIndex)
         {
-          for (int pos = array.Length ; pos >= i + 1; pos--)
-          {
-            //Alle Elemente rechts von x um eins nach rechts verschieben
-            array[pos] = array[pos - 1];
-          }
-          array[i] = x;
-          return true;
-        }
-
-        //Falls das Array leer ist, füge x an Position 0 ein
-        else if (array[i] == 0)
+          newEntries[i] = entries[i];
+        } else if (i > newIndex)
         {
-          array[i] = x;
-          return true;
+          newEntries[i] = entries[i - 1];
+        } else if (i == newIndex)
+        {
+          newEntries[i] = x;
         }
       }
-      return false;
-    }
 
-    //Delete Funktion implementiert in MultiSetSortedArray
-    //Print Funktion implementiert in SupportArray
+      entries = newEntries;
+      return true;
+    }
   }
 }

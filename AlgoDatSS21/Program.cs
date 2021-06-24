@@ -15,9 +15,9 @@ namespace AlgoDatSS21
         //Auswahlebene (Wörterbucharten)
         Console.WriteLine("------Menü------");
         Console.WriteLine("Wählen Sie ein Dictionary aus:");
-        Console.WriteLine("1. IMultiSet");
+        Console.WriteLine("1. IMultiSetUnsorted");
         Console.WriteLine("2. IMultiSetSorted");
-        Console.WriteLine("3. ISet");
+        Console.WriteLine("3. ISetUnsorted");
         Console.WriteLine("4. ISetSorted");
         Console.WriteLine("5. Programm beenden");
 
@@ -55,7 +55,7 @@ namespace AlgoDatSS21
         switch (eingabe)
         {
           case 1:
-            Console.WriteLine("Sie haben IMultiSet ausgewählt");
+            Console.WriteLine("Sie haben IMultiSetUnsorted ausgewählt");
             Console.WriteLine("Wählen Sie ein Dictionary aus:");
             Console.WriteLine("1. MultiSetUnsortedList");
             Console.WriteLine("2. MultiSetUnsortedArray");
@@ -92,9 +92,7 @@ namespace AlgoDatSS21
                 break;
               case 2:
                 Console.WriteLine("Sie haben MultiSetUnsortedArray ausgewählt");
-                Console.WriteLine("Wieviele Werte möchten Sie speichern?");
-                arraySize = Convert.ToInt32(Console.ReadLine());
-                idict = new MultiSetUnsortedArray(arraySize);
+                idict = new MultiSetUnsortedArray();
                 break;
               default:
                 Console.WriteLine("Eingabe ist ungültig");
@@ -141,15 +139,13 @@ namespace AlgoDatSS21
                 break;
               case 2:
                 Console.WriteLine("Sie haben MultiSetSortedArray ausgewählt");
-                Console.WriteLine("Wieviele Werte möchten Sie speichern?");
-                arraySize = Convert.ToInt32(Console.ReadLine());
-                idict = new MultiSetSortedArray(arraySize);
+                idict = new MultiSetSortedArray();
                 break;
             }
             break;
 
           case 3:
-            Console.WriteLine("Sie haben ISet ausgewählt");
+            Console.WriteLine("Sie haben ISetUnsorted ausgewählt");
             Console.WriteLine("Wählen Sie ein Dictionary aus:");
             Console.WriteLine("1. SetUnsortedList");
             Console.WriteLine("2. SetUnsortedArray");
@@ -188,9 +184,7 @@ namespace AlgoDatSS21
                 break;
               case 2:
                 Console.WriteLine("Sie haben SetUnsortedArray ausgewählt");
-                Console.WriteLine("Wieviele Werte möchten Sie speichern?");
-                arraySize = Convert.ToInt32(Console.ReadLine());
-                idict = new SetUnsortedArray(arraySize);
+                idict = new SetUnsortedArray();
                 break;
               case 3:
                 Console.WriteLine("Es wurde HashTableQuadProb gewählt\nBitte geben sie die Größe der Tabelle ein:");
@@ -249,9 +243,7 @@ namespace AlgoDatSS21
                 break;
               case 2:
                 Console.WriteLine("Sie haben SetSortedArray ausgewählt");
-                Console.WriteLine("Wieviele Werte möchten Sie speichern?");
-                arraySize = Convert.ToInt32(Console.ReadLine());
-                idict = new SetSortedArray(arraySize);
+                idict = new SetSortedArray();
                 break;
               case 3:
                 Console.WriteLine("Sie haben Binary Search Tree ausgewählt");

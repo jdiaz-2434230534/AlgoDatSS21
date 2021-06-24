@@ -1,7 +1,7 @@
 ﻿
 namespace AlgoDatSS21
 {
-    interface ISet:IMultiSet
+    interface ISetUnsorted:IMultiSetUnsorted
     {
        
     }

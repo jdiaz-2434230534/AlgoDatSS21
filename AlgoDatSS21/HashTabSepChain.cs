@@ -1,7 +1,7 @@
 ﻿using System;
 using AlgoDatSS21;
 //implements a separate chaining hash table
-class HashTabSepChain : AlgoDatSS21.ISet
+class HashTabSepChain : AlgoDatSS21.ISetUnsorted
 {
     class HashNode
     {

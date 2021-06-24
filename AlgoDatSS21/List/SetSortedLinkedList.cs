@@ -1,15 +1,24 @@
 namespace AlgoDatSS21
 {
-    class SetSortedLinkedList : MultiSetSortedLinkedList, ISetSorted
+    class SetSortedLinkedList : SortedList, ISetSorted
     {
-        public override bool Insert(int x)
+        public bool Insert(int x)
         {
-            if (!Search(x))
+            var searchResult = _search_(x);
+            if (searchResult.found)
             {
-                AddSorted(x);
+                return false;
+            }
+
+            // Position is root
+            if (searchResult.lastEntry == null)
+            {
+                root = new ListEntry(x, root);
                 return true;
             }
-            return false;
+            
+            searchResult.lastEntry.next = new ListEntry(x, searchResult.lastEntry.next);
+            return true;
         }
     }
 }

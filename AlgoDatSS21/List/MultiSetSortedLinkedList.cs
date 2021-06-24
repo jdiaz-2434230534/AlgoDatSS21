@@ -1,10 +1,19 @@
 ﻿namespace AlgoDatSS21
 {
-    class MultiSetSortedLinkedList : SupportList, IMultiSetSorted
+    class MultiSetSortedLinkedList : SortedList, IMultiSetSorted
     {
-        public override bool Insert(int x)
+        public bool Insert(int x)
         {
-            AddSorted(x);
+            var searchResult = _search_(x);
+
+            // Position is root
+            if (searchResult.lastEntry == null)
+            {
+                root = new ListEntry(x, root);
+                return true;
+            }
+            
+            searchResult.lastEntry.next = new ListEntry(x, searchResult.lastEntry.next);
             return true;
         }
     }
