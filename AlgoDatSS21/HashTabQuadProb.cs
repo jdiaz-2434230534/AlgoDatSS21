@@ -1,7 +1,7 @@
 ﻿using System;
 
 //implements a quadratic probing hash table
-class HashTabQuadProb : AlgoDatSS21.ISet 
+class HashTabQuadProb : AlgoDatSS21.ISetUnsorted 
 {
     class HashProbe
     {

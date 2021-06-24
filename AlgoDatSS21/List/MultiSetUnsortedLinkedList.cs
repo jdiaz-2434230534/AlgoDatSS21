@@ -1,10 +1,19 @@
 ﻿namespace AlgoDatSS21
 {
-    class MultiSetUnsortedLinkedList : SupportList, IMultiSet
+    class MultiSetUnsortedLinkedList : UnsortedList, IMultiSetUnsorted
     {
-        public override bool Insert(int x)
+        public bool Insert(int x)
         {
-            Enque(x);     //als letztes Element einfügen
+            var searchResult = _search_(x);
+            
+            // Position is root
+            if (searchResult.lastEntry == null)
+            {
+                root = new ListEntry(x);
+                return true;
+            }
+            
+            searchResult.lastEntry.next = new ListEntry(x);
             return true;
         }
     }

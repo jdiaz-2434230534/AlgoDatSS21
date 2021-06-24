@@ -6,77 +6,13 @@ using System.Threading.Tasks;
 
 namespace AlgoDatSS21
 {
-  class MultiSetUnsortedArray : SupportArray, IMultiSet
+  class MultiSetUnsortedArray : UnsortedArray, IMultiSetUnsorted
   {
-    public MultiSetUnsortedArray(int size) : base(size) { }
-
-    public bool Search(int x)
-    {
-      //Suche Element x in Array
-      for (int i = 0; i < array.Length; i++)
-      {
-        if (array[i] == x)
-        {
-          return true;
-        }
-      }
-
-      return false;
-    }
-
     public bool Insert(int x)
     {
-      //Element x wird an erste freie Stelle eingefügt 
-      for (int i = 0; i < array.Length; i++)
-      {
-        if (array[i] == 0)
-        {
-          array[i] = x;
-          return true;
-        }
-      }
-      return false;
+      entries = entries.Concat(new[] {x}).ToArray();
+      return true;
     }
-
-    public bool Delete(int x)
-    {
-      //Suchfunktion kann Element x nicht finden
-      if (Search(x) == false)
-      {
-        return false;
-      }
-
-      //Element x wird nach Finden gelöscht 
-      for (int i = 0; i < array.Length; i++)
-      {
-        //Spezialfall wenn x am Ende des Arrays liegt
-        if(i == array.Length - 1)
-        {
-          array[i] = 0;
-          return true;
-        }
-
-        if (array[i] == x)
-        {
-          for (int pos = i; pos < array.Length -1; pos++)
-          {
-
-            //Positionen rechts von Element x werden um eins nach links verschoben
-            array[pos] = array[pos + 1];
-
-            //Wert x an Position i wird gelöscht 
-            array[pos + 1] = 0;
-
-          }
-
-          return true;
-        }
-      }
-      return false;
-    }
-
-    //Print Funktion implementiert in SupportArray
-
   }
 }
 
