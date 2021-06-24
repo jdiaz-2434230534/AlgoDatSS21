@@ -14,7 +14,11 @@ namespace AlgoDatSS21
             while (run)
             {
                 //Auswahlebene (Wörterbucharten)
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.BackgroundColor = ConsoleColor.Blue;
                 Console.WriteLine("------Menü------");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.BackgroundColor = ConsoleColor.Black;
                 Console.WriteLine("Wählen Sie ein Dictionary aus:");
                 Console.WriteLine("1. IMultiSetUnsorted");
                 Console.WriteLine("2. IMultiSetSorted");
