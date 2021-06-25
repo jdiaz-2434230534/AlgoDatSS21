@@ -4,210 +4,196 @@ namespace AlgoDatSS21
 {
     class Treap : BinSearchTree
     {
-        // Einfügefunktion
+
         public override bool Insert(int x)
         {
-            bool eingefuegt = false;
             Node pointer = current; // Hilfsnode welche auf aktuelle Node verweist
+            bool inserted = false;
 
-            // Prüfen
             if (base.Search(x))
             {
-                Console.WriteLine("Das einzufügende Element ist bereits vorhanden und wird nicht erneut eingefügt.");
-                return eingefuegt; 
+                Console.WriteLine("Fehler: Das einzufügende Element ist bereits vorhanden.");
+                return inserted; 
             }
 
             else
             {
-
-                // Prüfen ob Struktur schon vorhanden, wenn nein dann Wurzel anlegen/einfügen:
+                //Baum noch nicht vorhanden
                 if (root == null)
                 {
                     base.Insert(x);
-
-                    root.Prio = RndPrio(); // zufällige Priorität vergeben
-
-                    // Testausgabe:
-                    //Console.WriteLine("Priorität: {0}", current.Prio);
+                    root.Prio = ZufallsPrio(); //Zufällige Priorität vergeben
 
                     return true;
                 }
 
-                // Wenn Baumstruktur schon vorhanden, dann einfügen
+                //Wenn Baumstruktur schon vorhanden, dann einfügen
                 else
                 {
                     base.Insert(x);
-
-                    current.Prio = RndPrio(); // Random Priorität vergeben
-
-                    // Testausgabe
-                    Console.WriteLine("Priorität: {0}", current.Prio);
-
-                    eingefuegt = true;
+                    current.Prio = ZufallsPrio(); //Zufällige Priorität vergeben
+                    inserted = true;
                 }
 
-                //Treapbedinung herstellen
-                TreapbedingungHerstellen(current);
+                //Treap-Bedingung herstellen
+                TreapBedingung(current);
 
-                return eingefuegt;
+                return inserted;
             }
         }
 
         // Hilfsfunktion zum Herstellen der Treapbedingung
-        public void TreapbedingungHerstellen(Node n)
+        public void TreapBedingung(Node n)
         {
-            // Prüfen ob Baum nicht leer, wenn nicht leer dann:
+            //Baum leer?
             if (n != null)
             {
-                // Solange Eltern Priorität(en) größer als Kind Priorität(en)
-                while (n.Parent != null && n != null && n.Parent.Prio > n.Prio)
+                while (n.Parent != null && n != null && n.Parent.Prio > n.Prio)     //While Eltern Priorität größer als Kind Priorität
                 {
-                    // Prüfen ob Kind links oder rechts
-                    if (n.Element < n.Parent.Element)
+                    if (n.Element < n.Parent.Element)   //Prüfen ob Kind links oder rechts
                     {
                         // Rechts Rotation durchführen
                         RightRotation(n);
                     }
                     else
+                    {
                         //Links Rotation durchführen
                         LeftRotation(n);
+                    }
                 }
             }
         }
 
-        // Löschfunktion
         public override bool Delete(int x)
         {
-            bool geloescht = false;
-            Node pointer = null;
+            Node temp = null;
+            bool deleted = false;
 
-            // Element mit Suchfunktion finden und Merker/Pointer auf dieses setzen
+            //Element mit Suchfunktion finden und temp auf dieses setzen
             if (base.Search(x))
             {
-                pointer = current;
+                temp = current;
             }
 
-            // Falls Element noch kein Blatt, solange rotieren bis Element ein Blatt ist
-            while (pointer.Left != null || pointer.Right != null)
+            //Solange rotieren, bis zu löschendes Element ein Blatt ist
+            while (temp.Left != null || temp.Right != null)
             {
-                if (pointer.Right == null || (pointer.Left != null && pointer.Left.Prio < pointer.Right.Prio))
-                    RightRotation(pointer.Left);
+                if (temp.Right == null || (temp.Left != null && temp.Left.Prio < temp.Right.Prio))
+                    RightRotation(temp.Left);
                 else
-                    LeftRotation(pointer.Right);
+                    LeftRotation(temp.Right);
             }
 
             // Gesuchtes bzw. zu löschendes Element als Blatt löschen
-            if (base.Delete(pointer.Element))
+            if (base.Delete(temp.Element))
             {
-                geloescht = true;
+                deleted = true;
             }
-            return geloescht;
+            return deleted;
         }
 
-        // Funktion zur Bestimmung der Priorität einer Node
-        public int RndPrio()
+        //Funktion zur Bestimmung der Priorität einer Node
+        public int ZufallsPrio()
         {
             Random rnd = new Random();
             return rnd.Next(500);
         }
 
-        // Links Rotation
-        protected void LeftRotation(Node n)
+        protected void LeftRotation(Node node)
         {
-            Node temp; // temporäre Node welche zum Rotieren benötigt wird
+            Node temp;
 
-            if (n != null)
+            if (node != null)
             {
-                // Prüfen ob Elternelement Root ist, wenn ja:
-                if (n.Parent == root)
+                //Prüfen ob Elternelement Root ist
+                if (node.Parent == root)
                 {
-                    temp = n.Left; // speichere "wanderndes" Element in temp
-                    root = n; // mache n zur neuen Wurzel
-                    root.Left = n.Parent; // schiebe ursprüngliche Wurzel nach linksunten
-                    n.Parent = null; // sage neuer Wurzel, dass sie kein Elternelement mehr hat
-                    root.Left.Parent = root; // weise alter Wurzel die neue Wurzel als Elternelment zu
-                    root.Left.Right = temp; // speichere "wandernde" Node an neuer Stelle
+                    temp = node.Left;               //rotierendes Element in temp zwischenspeichern
+                    root = node;                    //mache node zur neuen Wurzel
+                    root.Left = node.Parent;        //schiebe ursprüngliche Wurzel nach links-unten
+                    node.Parent = null;             //Elternelement-Verknüpfung löschen
+                    root.Left.Parent = root;        //Alter Wurzel die neue Wurzel als Elternelment zuweisen
+                    root.Left.Right = temp;         //rotierende Node an neuer Stelle speichern
 
                     if (temp != null)
                     {
-                        root.Left.Right.Parent = root.Left; // setze neuen Elternknoten des "gewanderten" Elements
+                        root.Left.Right.Parent = root.Left; //Neuen Elternknoten des rotierten Elements setzen
                     }
                 }
 
-                // Wenn Elternelement nicht Root ist:
+                //Eltern Element ist nicht root
                 else
                 {
-                    temp = n.Left; // speichere "wanderndes" Element in temp
-                    n.Left = n.Parent; // verschiebe linkes Element eins nach oben
-                    n.Parent = n.Parent.Parent; // setze Parent-Element von n eine Ebene höher (für nächste If-Abfrage)
+                    temp = node.Left;                   //rotierendes Element in temp zwischenspeichern
+                    node.Left = node.Parent;            //Linkes Element nach oben verschieben
+                    node.Parent = node.Parent.Parent;   //Parent-Element von node eine Ebene höher setzen
 
-                    // Prüfen ob n zukünfig links oder rechts des "Eltern-Eltern"-Elements ist
-                    if (n.Element < n.Parent.Element)
+                    // Prüfen ob node zukünfig links oder rechts des "Eltern-Eltern"-Elements ist
+                    if (node.Element < node.Parent.Element)
                     {
-                        n.Parent.Left = n;
+                        node.Parent.Left = node;
                     }
 
                     else
                     {
-                        n.Parent.Right = n;
+                        node.Parent.Right = node;
                     }
 
-                    n.Left.Parent = n; // weise nach unten verschobenem Element n als Elternelment zu
-                    n.Left.Right = temp; // speichere "wandernde" Node an neuer Stelle
+                    node.Left.Parent = node;    //node wird Elternelement vom verschobenen Element
+                    node.Left.Right = temp;     //rotierende Node an neuer Stelle speichern
                     if (temp != null)
                     {
-                        n.Left.Right.Parent = n.Left; // setze neuen Elternknoten des "gewanderten" Elements
+                        node.Left.Right.Parent = node.Left; //Neuen Elternknoten des rotierten Elements setzen
                     }
                 }
             }
         }
 
-        // Rechts Rotation
-        protected void RightRotation(Node n)
+        protected void RightRotation(Node node)
         {
-            Node temp; // temporäre Node welche zum Rotieren benötigt wird
+            Node temp;
 
-            if (n != null)
+            if (node != null)
             {
-                // Prüfen ob Elternelement Root ist, wenn ja:
-                if (n.Parent == root)
+                // Prüfen ob Elternelement Root ist
+                if (node.Parent == root)
                 {
-                    temp = n.Right; // speichere "wanderndes" Element in temp
-                    root = n; // mache n zur neuen Wurzel
-                    root.Right = n.Parent; // schiebe ursprüngliche Wurzel nach rechtsunten
-                    n.Parent = null; // sage neuer Wurzel, dass sie kein Elternelement mehr hat
-                    root.Right.Parent = root; // weise alter Wurzel die neue Wurzel als Elternelment zu
-                    root.Right.Left = temp; // speiche "wandernde" Node an neuer Stelle
+                    temp = node.Right;              //rotierendes Element in temp zwischenspeichern
+                    root = node;                    //mache node zur neuen Wurzel
+                    root.Right = node.Parent;       //schiebe ursprüngliche Wurzel nach rechts-unten
+                    node.Parent = null;             //Elternelement-Verknüpfung löschen
+                    root.Right.Parent = root;       //Alter Wurzel die neue Wurzel als Elternelment zuweisen
+                    root.Right.Left = temp;         //rotierende Node an neuer Stelle speichern
 
                     if (temp != null)
                     {
-                        root.Right.Left.Parent = root.Right; // setze neuen Elternknoten des "gewanderten" Elements
+                        root.Right.Left.Parent = root.Right; //Neuen Elternknoten des rotierten Elements setzen
                     }
                 }
 
-                // Wenn Elternelement nicht Root ist:
+                //Eltern Element ist nicht root
                 else
                 {
-                    temp = n.Right; // speichere "wanderndes" Element in temp
-                    n.Right = n.Parent; // verschiebe rechtes Element eins nach oben
-                    n.Parent = n.Parent.Parent; // setze Parent-Element von n eine Ebene höher (für nächste If-Abfrage)
+                    temp = node.Right;                  //rotierendes Element in temp zwischenspeichern
+                    node.Right = node.Parent;           //Rechtes Element nach oben verschieben
+                    node.Parent = node.Parent.Parent;   //Parent-Element von node eine Ebene höher setzen
 
-                    // Prüfen ob n zukünfig links oder rechts des "Eltern-Eltern"-Elements ist
-                    if (n.Element < n.Parent.Element)
+                    // Prüfen ob node zukünfig links oder rechts des "Eltern-Eltern"-Elements ist
+                    if (node.Element < node.Parent.Element)
                     {
-                        n.Parent.Left = n;
+                        node.Parent.Left = node;
                     }
 
                     else
                     {
-                        n.Parent.Right = n;
+                        node.Parent.Right = node;
                     }
 
-                    n.Right.Parent = n; // weise nach unten verschobenem Element n als Elternelment zu
-                    n.Right.Left = temp; // speichere "wandernde" Node an neuer Stelle
+                    node.Right.Parent = node;   //node wird Elternelement vom verschobenen Element
+                    node.Right.Left = temp;     //rotierende Node an neuer Stelle speichern
                     if (temp != null)
                     {
-                        n.Right.Left.Parent = n.Right; // setze neuen Elternknoten des "gewanderten" Elements
+                        node.Right.Left.Parent = node.Right; //Neuen Elternknoten des rotierten Elements setzen
                     }
                 }
             }
