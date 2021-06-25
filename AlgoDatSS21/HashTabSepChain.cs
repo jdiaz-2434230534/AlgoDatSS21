@@ -62,7 +62,7 @@ class HashTabSepChain : AlgoDatSS21.ISetUnsorted
         if (table[hash] != null && hash == table[hash].getkey() % size)
         {
 
-            //search through nbodes to see if key exists
+            //search through nodes to see if key exists
 
             if (Search(key))
             {

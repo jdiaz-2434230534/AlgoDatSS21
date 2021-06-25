@@ -37,8 +37,7 @@ namespace AlgoDatSS21
                         eingabe = Convert.ToInt32(Console.ReadLine());
                         while (eingabe > 5 || eingabe < 1)
                         {
-                            //Console.WriteLine("Eingabe ungültig, bitte wählen Sie eine Zahl zwischen 1 und 5.");
-                            runMenu();
+                            Console.WriteLine("Eingabe ungültig, bitte wählen Sie eine Zahl zwischen 1 und 5.");
                             eingabe = Convert.ToInt32(Console.ReadLine());
                         }
                         eingabeGueltig = true;
